@@ -65,6 +65,15 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('recipe title', content)
         self.assertEqual(len(response_context_recipes), 1)
 
+    def test_recipe_category_template_dont_load_recipes_not_published(self):
+        """Test recipe is_published False font show"""
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(
+            reverse('recipes:category', args=(recipe.category.id,)))
+
+        self.assertEqual(response.status_code, 404)
+
     def test_recipe_detail_view_returns_404_if_no_recipe_found(self):
         response = self.client.get(
             reverse('recipes:recipe', kwargs={'id': 1000}))
@@ -77,3 +86,11 @@ class RecipeViewsTest(RecipeTestBase):
         content = response.content.decode('utf-8')
 
         self.assertIn('recipe title', content)
+
+    def test_recipe_category_template_dont_load_recipe_not_published(self):
+        """Test recipe is_published False font show"""
+        recipe = self.make_recipe(is_published=False)
+
+        response = self.client.get(
+            reverse('recipes:recipe', kwargs={'id': recipe.id}))
+        self.assertEqual(response.status_code, 404)
