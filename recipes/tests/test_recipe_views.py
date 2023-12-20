@@ -41,6 +41,15 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('5 porções', content)
         self.assertEqual(len(response_context_recipes), 1)
 
+    def test_recipe_home_template_dont_load_recipes_not_published(self):
+        """Test recipe is_published False font show"""
+        self.make_recipe(is_published=False)
+
+        response = self.client.get(reverse('recipes:home'))
+
+        self.assertIn('No Recipes Found Here',
+                      response.content.decode('utf-8'))
+
     def test_recipe_category_view_returns_404_if_no_recipes_found(self):
         response = self.client.get(
             reverse('recipes:category', kwargs={'category_id': 1000}))
