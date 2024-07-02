@@ -139,6 +139,7 @@ h6 {
 
 .main-content {
   padding-top: 0;
+  min-height: 100vh;
 }
 
 .main-content-list {
