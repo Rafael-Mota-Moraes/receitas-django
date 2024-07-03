@@ -290,3 +290,15 @@ h6 {
   margin: 2rem;
   padding: 0 2rem;
 }
+
+.center {
+  text-align: center;
+}
+
+.m-y {
+  margin: 0 var(--spacing-gutter-medium);
+}
+
+.m-x {
+  margin: var(--spacing-gutter-medium) 0;
+}
