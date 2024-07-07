@@ -39,7 +39,6 @@ class RecipeTestBase(TestCase):
             preparation_step='Recipe Preparation Steps',
             preparation_step_is_html=False,
             is_published=True,
-
     ):
 
         if category_data is None:
