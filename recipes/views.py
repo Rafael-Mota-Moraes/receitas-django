@@ -35,3 +35,7 @@ def category(request, category_id):
         'is_detail_page': False,
         'title': f'{recipes[0].category.name}  - Category |'
     })
+
+
+def search(request):
+    ...
