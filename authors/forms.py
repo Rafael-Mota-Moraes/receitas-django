@@ -12,3 +12,21 @@ class RegisterForm(forms.ModelForm):
             'email',
             'password'
         ]
+
+        labels = {
+            'username': 'Digite seu usuário'
+        }
+
+        help_texts = {
+            'email': 'Digite um email'
+        }
+
+        error_messages = {
+            'username': {
+                'required': 'Campo é obrigatório'
+            }
+        }
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={'placeholder': 'Digite seu nome'}),
+        }
