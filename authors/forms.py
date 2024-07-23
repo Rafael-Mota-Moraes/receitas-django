@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+import re
 
 
 def add_attr(field, attr_name, attr_new_val):
@@ -10,6 +11,18 @@ def add_attr(field, attr_name, attr_new_val):
 
 def add_placeholder(field, placeholder_val):
     add_attr(field, 'placeholder', placeholder_val)
+
+
+def strong_password(password):
+    regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$')
+
+    if not regex.match(password):
+        raise ValidationError(
+            ('Senha deve ter pelo menos uma letra maiúscula'
+             'uma letra minúscula'
+             'e um número'
+             'Tamanho da senha tem que ser de no mínimo 8 caracteres'),
+            code='invalid')
 
 
 class RegisterForm(forms.ModelForm):
@@ -25,19 +38,25 @@ class RegisterForm(forms.ModelForm):
         required=False,
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Digite sua senha'
-        })
+        }),
+        validators=[strong_password]
     )
+
     password2 = forms.CharField(
         required=False,
         widget=forms.PasswordInput(attrs={
             'placeholder': 'Digite novamente sua senha'
         }),
         error_messages={
-            'required': 'Senha não pode estar vazia'
+            'required': 'Senha não é forte o suficiente'
         },
         help_text=(
-            'Senha deve ter entre 1 e 150 caracteres'
-        )
+            'Senha deve ter pelo menos uma letra maiúscula'
+            'uma letra minúscula'
+            'e um número'
+            'Tamanho da senha tem que ser de no mínimo 8 caracteres'
+        ),
+
     )
 
     class Meta:
@@ -89,8 +108,10 @@ class RegisterForm(forms.ModelForm):
             password_confirmation_error = ValidationError(
                 'Senhas devem ser iguais!',
                 code='invalid'
-            ),
+            )
             raise ValidationError({
                 'password': password_confirmation_error,
-                'password2': password_confirmation_error
+                'password2': [
+                    password_confirmation_error,
+                ],
             })
