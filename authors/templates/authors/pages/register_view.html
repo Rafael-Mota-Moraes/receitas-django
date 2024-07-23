@@ -6,6 +6,8 @@
   <div class="main-content center container">
     <h1>Faça o registro</h1>
   </div>
+  
+  {% include "recipes/partials/messages.html" %}
 
   <div class="main-content container">
     <form action="{% url 'authors:create' %}" method="POST">
