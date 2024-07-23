@@ -33,20 +33,16 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['email'], 'Seu email')
         add_placeholder(self.fields['first_name'], 'Seu primeiro nome')
         add_placeholder(self.fields['last_name'], 'Seu ultimo nome')
+        add_placeholder(self.fields['password'], 'Sua senha')
+        add_placeholder(self.fields['password2'], 'Confirme sua senha')
 
     password = forms.CharField(
         required=False,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Digite sua senha'
-        }),
         validators=[strong_password]
     )
 
     password2 = forms.CharField(
         required=False,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Digite novamente sua senha'
-        }),
         error_messages={
             'required': 'Senha não é forte o suficiente'
         },
@@ -81,10 +77,6 @@ class RegisterForm(forms.ModelForm):
             'username': {
                 'required': 'Campo é obrigatório'
             }
-        }
-
-        widgets = {
-            'first_name': forms.TextInput(attrs={'placeholder': 'Digite seu nome'}),
         }
 
     def clean_password(self):
