@@ -38,7 +38,10 @@ class RegisterForm(forms.ModelForm):
 
     password = forms.CharField(
         required=False,
-        validators=[strong_password]
+        validators=[strong_password],
+        help_text=(
+            'Digite uma senha forte!'
+        ),
     )
 
     password2 = forms.CharField(
@@ -47,10 +50,7 @@ class RegisterForm(forms.ModelForm):
             'required': 'Senha não é forte o suficiente'
         },
         help_text=(
-            'Senha deve ter pelo menos uma letra maiúscula'
-            'uma letra minúscula'
-            'e um número'
-            'Tamanho da senha tem que ser de no mínimo 8 caracteres'
+            'Digite uma senha forte!'
         ),
 
     )
