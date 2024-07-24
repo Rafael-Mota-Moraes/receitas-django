@@ -42,6 +42,7 @@ class RegisterForm(forms.ModelForm):
         help_text=(
             'Digite uma senha forte!'
         ),
+        label='Password',
     )
 
     password2 = forms.CharField(
@@ -52,7 +53,7 @@ class RegisterForm(forms.ModelForm):
         help_text=(
             'Digite uma senha forte!'
         ),
-
+        label='Password2',
     )
 
     class Meta:
