@@ -5,9 +5,9 @@ from django.contrib import messages
 
 
 def register_view(request):
-    register_form_data = request.session.get('register_form_data', None)
+    register_form_data = request.session.get("register_form_data", None)
     form = RegisterForm(register_form_data)
-    return render(request, 'authors/pages/register_view.html', {'form': form})
+    return render(request, "authors/pages/register_view.html", {"form": form})
 
 
 def register_create(request):
@@ -15,13 +15,14 @@ def register_create(request):
         raise Http404
 
     POST = request.POST
-    request.session['register_form_data'] = POST
+    request.session["register_form_data"] = POST
     form = RegisterForm(POST)
 
     if form.is_valid():
         form.save()
         messages.success(
-            request, 'Seu usuário foi salvo na base de dados, por favor faça login.')
-        del (request.session['register_form_data'])
+            request, "Seu usuário foi salvo na base de dados, por favor faça login."
+        )
+        del request.session["register_form_data"]
 
-    return redirect('authors:register')
+    return redirect("authors:register")
