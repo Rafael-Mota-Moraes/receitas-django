@@ -36,8 +36,28 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['password'], 'Sua senha')
         add_placeholder(self.fields['password2'], 'Confirme sua senha')
 
+    first_name = forms.CharField(
+        error_messages={'required': 'Write your first name'},
+        required=True,
+        label='First Name'
+    )
+
+    last_name = forms.CharField(
+        error_messages={'required': 'Write your last name'},
+        required=True,
+        label='Last Name'
+    )
+
+    email = forms.EmailField(
+        error_messages={'required': 'Write your e-mail'},
+        required=True,
+        label='E-mail',
+        help_text='The e-mail must be valid'
+    )
+
     password = forms.CharField(
-        required=False,
+        required=True,
+        error_messages={'required': 'Password must not be empty'},
         validators=[strong_password],
         help_text=(
             'Digite uma senha forte!'
@@ -46,9 +66,9 @@ class RegisterForm(forms.ModelForm):
     )
 
     password2 = forms.CharField(
-        required=False,
+        required=True,
         error_messages={
-            'required': 'Senha não é forte o suficiente'
+            'required': 'Please repeat your password'
         },
         help_text=(
             'Digite uma senha forte!'
@@ -68,10 +88,6 @@ class RegisterForm(forms.ModelForm):
 
         labels = {
             'username': 'Digite seu usuário',
-        }
-
-        help_texts = {
-            'email': 'Digite um email'
         }
 
         error_messages = {
