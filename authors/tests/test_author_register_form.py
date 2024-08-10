@@ -94,3 +94,46 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         message = "Username must have less than 150 characters"
         self.assertIn(message, response.context["form"].errors.get("username"))
         self.assertIn(message, response.content.decode("utf-8"))
+
+    def test_password_field_have_lower_upper_case_letters_and_numbers(self):
+        self.form_data["password"] = "abc123"
+        url = reverse("authors:create")
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        message = (
+            "Senha deve ter pelo menos uma letra maiúscula"
+            "uma letra minúscula"
+            "e um número"
+            "Tamanho da senha tem que ser de no mínimo 8 caracteres"
+        )
+
+        self.assertIn(message, response.context["form"].errors.get("password"))
+        self.assertIn(message, response.content.decode("utf-8"))
+
+        self.form_data["password"] = "@A123abc123"
+        url = reverse("authors:create")
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        self.assertNotIn(
+            message, response.context["form"].errors.get("password"))
+        self.assertNotIn(message, response.content.decode("utf-8"))
+
+    def test_password_and_password_confirmation_are_equal(self):
+        self.form_data["password"] = "@A123abc123"
+        self.form_data["password2"] = "@A123abc1234"
+        url = reverse("authors:create")
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        message = 'Senhas devem ser iguais!'
+
+        self.assertIn(message, response.context["form"].errors.get("password"))
+        self.assertIn(message, response.content.decode("utf-8"))
+
+        self.form_data["password"] = "@A123abc123"
+        self.form_data["password2"] = "@A123abc123"
+        url = reverse("authors:create")
+        response = self.client.post(url, data=self.form_data, follow=True)
+
+        message = 'Senhas devem ser iguais!'
+
+        self.assertNotIn(message, response.content.decode("utf-8"))
