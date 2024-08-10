@@ -36,6 +36,16 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['password'], 'Sua senha')
         add_placeholder(self.fields['password2'], 'Confirme sua senha')
 
+    username = forms.CharField(
+        label='Username',
+        help_text='Max 150 characters, min 4 characters',
+        error_messages={'required': 'Write your username',
+                        'min_length': 'Username must have at least 4 characters',
+                        'max_length': 'Username must have less than 150 characters',
+                        },
+        min_length=4, max_length=150
+    )
+
     first_name = forms.CharField(
         error_messages={'required': 'Write your first name'},
         required=True,
@@ -88,12 +98,6 @@ class RegisterForm(forms.ModelForm):
 
         labels = {
             'username': 'Digite seu usuário',
-        }
-
-        error_messages = {
-            'username': {
-                'required': 'Campo é obrigatório'
-            }
         }
 
     def clean_password(self):
