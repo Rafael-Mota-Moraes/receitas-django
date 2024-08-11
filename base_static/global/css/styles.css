@@ -420,6 +420,21 @@ h6 {
   margin: var(--spacing-gutter-medium) 0;
 }
 
+.plaintext-button {
+  display: inline;
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-size: 1.6rem;
+}
+
+.inline-form {
+  display: inline;
+  font-size: 1.6rem;
+}
+
 @media (max-width: 600px) {
   .main-content-list,
   .form-content-grid {
