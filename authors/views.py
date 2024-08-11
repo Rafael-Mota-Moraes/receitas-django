@@ -8,7 +8,7 @@ from django.urls import reverse
 def register_view(request):
     register_form_data = request.session.get("register_form_data", None)
     form = RegisterForm(register_form_data)
-    return render(request, "authors/pages/register_view.html", {"form": form, 'form_action': reverse('authors:create')})
+    return render(request, "authors/pages/register_view.html", {"form": form, 'form_action': reverse('authors:register_create')})
 
 
 def register_create(request):
@@ -29,3 +29,11 @@ def register_create(request):
         del request.session["register_form_data"]
 
     return redirect("authors:register")
+
+
+def login_view(request):
+    return render(request, 'authors/pages/login.html')
+
+
+def login_create(request):
+    return render(request, 'authors/pages/login.html')
