@@ -471,6 +471,14 @@ a {
   grid-column: span 2;
 }
 
+.plain-text-button {
+  display: inline;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
 @media (max-width: 600px) {
   .main-content-list,
   .form-content-grid {
