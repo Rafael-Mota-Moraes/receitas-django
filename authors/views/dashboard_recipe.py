@@ -9,16 +9,35 @@ from recipes.models import Recipe
 
 
 class DashboardRecipe(View):
-    def get(self, request, id):
-        self.request
-        recipe = Recipe.objects.get(
-            is_published=False,
-            author=request.user,
-            pk=id,
-        )
+    def get_recipe(self, id):
+        recipe = None
 
-        if not recipe:
-            raise Http404()
+        if id:
+            recipe = Recipe.objects.get(
+                is_published=False,
+                author=self.request.user,
+                pk=id,
+            )
+
+            if not recipe:
+                raise Http404()
+
+            return recipe
+
+    def render_recipe(self, form):
+        return render(self.request, 'authors/pages/dashboard_recipe.html', {
+            "form": form,
+        })
+
+    def get(self, request, id):
+        recipe = self.get_recipe(id)
+
+        form = AuthorRecipeForm(instance=recipe)
+
+        return self.render_recipe(form)
+
+    def post(self, request, id):
+        recipe = self.get_recipe(id)
 
         form = AuthorRecipeForm(
             data=request.POST or None,
@@ -38,6 +57,4 @@ class DashboardRecipe(View):
 
             return redirect(reverse("authors:dashboard_recipe_edit", args=(id, )))
 
-        return render(request, 'authors/pages/dashboard_recipe.html', {
-            "form": form,
-        })
+        return self.render_recipe(form)
