@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
-from .forms import RegisterForm, LoginForm
+from authors.forms import RegisterForm, LoginForm
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
