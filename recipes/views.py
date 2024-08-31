@@ -1,6 +1,6 @@
 from django.db.models.query import QuerySet
 from django.http.response import HttpResponse as HttpResponse
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from recipes.models import Recipe
 from django.http import Http404
 from django.db.models import Q
@@ -13,6 +13,13 @@ from django.forms.models import model_to_dict
 import os
 
 PER_PAGE = os.environ.get("PER_PAGE", 6)
+
+
+def theory(request, *args, **kwargs):
+    return render(
+        request,
+        'recipes/pages/theory.html'
+    )
 
 
 class RecipeListViewBase(ListView):
