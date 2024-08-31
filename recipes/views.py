@@ -3,7 +3,7 @@ from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, get_object_or_404
 from recipes.models import Recipe
 from django.http import Http404
-from django.db.models import Q
+from django.db.models import Q, F
 from utils.pagination import make_pagination
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
@@ -17,11 +17,8 @@ PER_PAGE = os.environ.get("PER_PAGE", 6)
 
 def theory(request, *args, **kwargs):
     recipes = Recipe.objects.filter(
-        Q(
-            Q(title__icontains="da", id__gt=2, is_published=True) |
-            Q(id__gt=1000)
-        )
-    )[:10]
+        id=F('author_id')
+    )[:10].order_by('-id')
 
     context = {
         'recipes': recipes
