@@ -3,31 +3,17 @@ from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, get_object_or_404
 from recipes.models import Recipe
 from django.http import Http404
-from django.db.models import Q, F
+from django.db.models import Q, Value, F
 from utils.pagination import make_pagination
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
+from django.db.models.aggregates import Count
 
 import os
 
 PER_PAGE = os.environ.get("PER_PAGE", 6)
-
-
-def theory(request, *args, **kwargs):
-    recipes = Recipe.objects.filter(
-        id=F('author_id')
-    )[:10].order_by('-id')
-
-    context = {
-        'recipes': recipes
-    }
-    return render(
-        request,
-        'recipes/pages/theory.html',
-        context=context
-    )
 
 
 class RecipeListViewBase(ListView):
