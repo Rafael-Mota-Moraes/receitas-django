@@ -10,3 +10,4 @@ User = get_user_model()
 def create_profile(sender, instance, created, *args, **kwargs):
     if created:
         profile = Profile.objects.create(author=instance)
+        profile.save()
